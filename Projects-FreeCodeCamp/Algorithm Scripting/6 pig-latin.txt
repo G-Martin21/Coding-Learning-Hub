@@ -1,0 +1,18 @@
+function translatePigLatin(str) {
+
+  let newStr = "";
+  if (!(/[aeiou]/).test(str.charAt(0))) {     
+      //    is consonant
+      let index = str.search(/[aeiou]/);
+      newStr = (index !== -1) ? 
+        (str.slice(index) + str.slice(0, index) + "ay") :
+        (str + "ay");
+  } else {
+      newStr = str + "way";
+  }
+
+  return newStr;
+}
+
+console.log(translatePigLatin("algorithm"));
+console.log(translatePigLatin("schwartz"))

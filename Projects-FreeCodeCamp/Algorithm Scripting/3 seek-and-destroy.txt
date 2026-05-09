@@ -1,0 +1,22 @@
+/*
+You will be provided with an initial array (the first argument in the destroyer function), followed by one or more arguments. Remove all elements from the initial array that are of the same value as these arguments.
+*/
+
+function destroyer(arr, ...valsToRemove) {
+
+  //const newArr = [...arr, ...args];
+
+  const symmetricDif = ((arrOne, arrTwo) => {
+    return arrTwo.filter(item => {
+    if (!arrOne.includes(item)) {return item}})
+  })
+
+  //return symmetricDif(arr, args).concat(symmetricDif(args, arr))
+  return arr.filter(elem => !valsToRemove.includes(elem));
+}
+
+console.log(destroyer(["possum", "trollo", 12, "safari", "hotdog", 92, 65, "grandma", "bugati", "trojan", "yacht"], "yacht", "possum", "trollo", "safari", "hotdog", "grandma", "bugati", "trojan"));
+
+Notes
+
+https://forum.freecodecamp.org/t/freecodecamp-challenge-guide-seek-and-destroy/16046

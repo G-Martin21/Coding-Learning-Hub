@@ -1,0 +1,97 @@
+/*
+
+Find the smallest common multiple of the provided parameters that can be evenly divided by both, as well as by all sequential numbers in the range between these parameters.
+
+The range will be an array of two numbers that will not necessarily be in numerical order.
+
+For example, if given 1 and 3, find the smallest common multiple of both 1 and 3 that is also evenly divisible by all numbers between 1 and 3. The answer here would be 6.
+
+
+https://www.calculatorsoup.com/calculators/math/lcm.php
+
+https://www.programiz.com/javascript/examples/lcm
+
+https://forum.freecodecamp.org/t/freecodecamp-challenge-guide-smallest-common-multiple/16075
+*/
+
+// We are going to implement the division method
+
+function smallestCommons(arr) {
+  
+function checkPrime(num) {
+
+  let isPrime = true;
+
+  if (num === 1) {
+    isPrime = false;
+  } else if (num > 1) {
+    for (let i = 2; i < num; i++) {
+      if (num % i == 0) {
+        isPrime = false;
+        break;
+      }
+    }
+  }
+  return isPrime;
+}  
+
+function divideArrayValues(arr, prime, result) {
+
+  let newArray = [];
+  if (arr.some(value => (value % prime == 0))) {
+    // if some value of the array is divible by prime, return
+    // its quotient, else just the value
+    result.push(prime);
+    newArray = arr.map(value => {
+      if (value % prime == 0) { 
+        return value / prime
+      } else {
+        return value;
+      }})
+    //call again to check if the new values are still divisible by prime
+    divideArrayValues(newArray, prime, result);
+  } 
+  return result;
+}
+
+//obtain the range of number to use -> array
+const getRange = (range => {
+  let newArray = [];
+  for (let i = range[0]; i <= range[1]; i++) {
+    newArray.push(i);
+  }
+  return newArray;
+});
+
+//find all the primes <= max
+const getPrimes = (max => { 
+  let Primes = [];
+  for (let i = 2; i <= max; i++) {
+    if (checkPrime(i)) {
+      Primes.push(i);
+    }
+  }
+  return Primes;
+});
+
+const getLCM = ((arr, primes) => {
+  let result = [];
+  for (let i = 0; i < primes.length; i++) {
+    if (arr.every(value => value == 1)) {
+      break;
+    } else {
+      divideArrayValues(arr, primes[i], result);
+    }
+  }
+  return result.reduce((total, num) => {
+    return total = total*num;
+  }
+  , 1)
+});
+
+arr.sort(function(a, b){return a-b});
+return(getLCM(getRange(arr), getPrimes(arr[1])))
+
+}
+
+console.log(smallestCommons([1,13]));

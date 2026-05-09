@@ -1,0 +1,37 @@
+/*
+Compare two arrays and return a new array with any items only found in one of the two given arrays, but not both. In other words, return the symmetric difference of the two arrays.
+*/
+
+function diffArray(arr1, arr2) {
+  //const newArr = [];
+  //newArr for each element of arr2
+  //if arr2.item is not in arr1 return item
+  // if arr2.length >= arr1.length must be a difference, 
+  // if arr1.length == arr2.length ?
+
+  // arrTwo <= arrOne => return which elements of arrTwo are not in arrOne
+  const symmetricDif = ((arrOne, arrTwo) => {
+    return arrTwo.filter(item => {
+    if (!arrOne.includes(item)) {return item}})
+  })
+
+  return symmetricDif(arr1, arr2).concat(symmetricDif(arr2, arr1))
+}
+  /*if (arr2.length > arr1.length) { 
+    return symmetricDif(arr1, arr2);
+  } else if (arr2.length < arr1.length) { 
+    return symmetricDif(arr2, arr1);
+  } else {
+    return symmetricDif(arr1, arr2).concat(symmetricDif(arr2, arr1))
+  }
+  }*/
+
+console.log(diffArray(["andesite", "grass", "dirt", "pink wool", "dead shrub"], ["diorite", "andesite", "grass", "dirt", "dead shrub"]))
+
+
+Notes
+
+https://forum.freecodecamp.org/t/freecodecamp-challenge-guide-diff-two-arrays/16008
+
+https://www.javascripttutorial.net/array/javascript-remove-duplicates-from-array/
+

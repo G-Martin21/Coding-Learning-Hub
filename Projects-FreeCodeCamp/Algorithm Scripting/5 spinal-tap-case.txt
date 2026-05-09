@@ -1,0 +1,19 @@
+function spinalCase(str) {
+
+  //const words = str.split(/(?=[A-Z]|\s|-|_)/);
+
+  const newArray = str.split(/(?=[A-Z]|\s|-|_)/)
+                     .map(word =>
+                          word.replace(/(\s|_|-)/, ""));
+
+  return newArray
+      .filter(str => !!str)
+      .join("-")
+      .toLowerCase();
+}
+
+spinalCase('This Is Spinal Tap');
+spinalCase("thisIsSpinalTap");
+spinalCase("The_Andy_Griffith_Show");
+spinalCase("Teletubbies say Eh-oh");
+spinalCase("AllThe-small Things")

@@ -1,0 +1,24 @@
+function palindrome(str) {
+  /* 
+  take str
+    remove all non-alphanumeric characters (punctuation, spaces, symbols)
+    cleanstr = str.match(/[\w\d]/gi)   //.join().tolowerCase
+    turn to lower case or uppercase
+    check if it is palindrome
+      reverse str -> mirror str
+      reverseStr = cleanstr.reverse()
+
+      are both strings equal? > palindrome
+      cleanstr.every( (value, index, arr) => value === reverseStr(arr.length-1) - index) );
+      (arr.length-1) -index
+      arr.length-2
+      arr.length-3
+  */
+
+  let cleanStr = str.toLowerCase().match(/[a-z0-9]/gi);
+  let reverseStr = cleanStr.reverse();
+  return cleanStr.every( (value, index, arr) => value === reverseStr[arr.length-1 - index])
+    
+  }
+
+console.log(palindrome("eye"));

@@ -1,0 +1,31 @@
+const getRomanNumerals = (number) => {
+  
+// Empty string counts for our 0, romans do not have!
+const ROMAN_NUMERALS = [
+       ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"],
+       ["", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"],
+       ["", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"],
+       ["", "M", "MM", "MMM"]
+     ];
+
+// Break number into power of tens
+ const getDecimals = (number) => {
+   let i = 0;
+   let numberDecimals = [];
+   let next = Math.trunc(number / Math.pow(10,i));
+   while (next != 0) {
+     numberDecimals[i] = next % 10;
+     i++;
+     next = Math.trunc(number / Math.pow(10,i));
+   }
+   return numberDecimals;
+ }
+ 
+// Convert each decimal to its roman equivalent
+// Index gives the power, value the numeral, with empty string for 0
+let romanNumbers = getDecimals(number).map( (value, index) => ROMAN_NUMERALS[index][value])
+
+// Recompose number into roman numeral  
+return romanNumbers.reverse().join("")
+
+}

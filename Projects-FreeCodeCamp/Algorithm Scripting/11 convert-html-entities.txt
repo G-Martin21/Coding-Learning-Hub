@@ -1,0 +1,37 @@
+/*
+Convert the characters &, <, >, " (double quote), and ' (apostrophe), in a string to their corresponding HTML entities.
+*/
+
+function convertHTML(str) {
+
+const entities = new Map ([
+  ['<', '&lt;'],
+  ['>', '&gt;'],
+  ['&', '&amp;'],
+  ['"', '&quot;'],
+  ["'", '&apos;']
+]);
+
+//char -> func recognize HTML entity
+// char => is an HTML entity?*/
+const isAnEntity = (char => entities.has(char));
+
+//replace char wit by its corresponding HTML entity
+//char => HTML entity*/
+const getEntity = (char => entities.get(char));
+
+//func parse str (read each word in the str)
+//str => HTML str
+
+
+return str.split("")
+        .reduce(function(total, word) {
+            return isAnEntity(word) ? total.concat(getEntity(word)) :
+                           total.concat(word);
+        }, "");
+
+}
+
+console.log(convertHTML("Dolce & Gabbana"));
+console.log(convertHTML("Schindler's List"));
+console.log(convertHTML('Stuff in "quotation marks"'))

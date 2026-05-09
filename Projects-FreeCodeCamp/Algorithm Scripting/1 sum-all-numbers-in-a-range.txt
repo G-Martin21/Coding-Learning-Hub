@@ -1,0 +1,22 @@
+//@[int1 int2] -> int
+function sumAll(arr) {
+
+  //sort arr numbers
+  const numArr = ((arr[0] < arr[1]) ? { start:arr[0], end:arr[1]} : { start:arr[1], end:arr[0] });
+  //  const [first, last] = [...arr].sort((a, b) => a - b);
+  //sum numbers recursively: sum num1 + sumAll(num2, num3)
+  const recursiveSum = ((num) => {
+    if (num == numArr.end) {
+      return num;
+    } else {
+      return num + recursiveSum(num + 1);
+  }
+  });
+  return recursiveSum(numArr.start);
+}
+
+console.log(sumAll([10, 5]));
+
+Notes: solutions @ https://forum.freecodecamp.org/t/freecodecamp-challenge-guide-sum-all-numbers-in-a-range/16083
+
+https://www.w3schools.com/react/react_es6_spread.asp

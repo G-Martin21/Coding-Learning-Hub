@@ -1,0 +1,23 @@
+/*
+Find the missing letter in the passed letter range and return it.
+
+If all letters are present in the range, return undefined.
+*/
+
+function fearNotLetter(str) {
+
+  let letters = "abcdefghijklmnopqrstuvwxyz";
+  if (str === letters) {
+    return;
+  } else {
+    let index = letters.indexOf(str.charAt(0));
+    let compArray = [str.split(""), 
+        letters.slice(index, index + str.length + 1).split("")];
+
+        return compArray[1]
+          .filter(letter => !compArray[0].includes(letter))
+          .toString();
+  }
+}
+
+console.log(fearNotLetter("abcdefghjklmno"));

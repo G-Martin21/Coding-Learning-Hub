@@ -1,0 +1,30 @@
+function rot13(str) {
+
+  let arr = str.split(" ");
+  const SHIFTBY = 13;
+
+  let newArr = arr.map( value => {
+    let txt = "";
+    for (let x of value) {
+      let code = 0;
+      let asciiCode = 0;
+      if (x >= "A" && x <= "Z") {
+        code = x.charCodeAt(0) - SHIFTBY;
+        if (code < 65) {
+          asciiCode = ((code + 65) % 26 + 65);
+        } else if (code > 90) {
+           asciiCode = ((code - 90) % 26 + 65);
+        } else {
+           asciiCode = code;
+        }
+      } else {
+          asciiCode = x.charCodeAt(0);
+      }
+      txt += String.fromCharCode(asciiCode);
+    }
+  return txt;
+})
+return newArr.join(" ")      
+}
+
+console.log(rot13("SERR PBQR PNZC"));

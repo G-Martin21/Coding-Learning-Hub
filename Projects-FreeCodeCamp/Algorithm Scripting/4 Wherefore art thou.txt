@@ -1,0 +1,61 @@
+// does not work properly
+function whatIsInAName(collection, source) {
+  const arr = [];
+  // Only change code below this line
+  
+  /*take the object from source and make it a string
+  for each object in collection, 
+    convert to string
+    compare with the string in source
+    return it if it is equal*/
+  const sourceString = JSON.stringify(source);
+
+  const newString = [];
+  collection.forEach(value => {
+    newString.push(JSON.stringify(value))
+  })
+  //console.log(newString);
+  // clean curly braces from both ends
+  let cleanString = sourceString.substring(1,sourceString.length-1)
+
+  const resultArray = [];
+  newString.forEach(value => {
+    if (value.includes(cleanString)) {
+      resultArray.push(value);
+    }
+  });
+
+  console.log(resultArray);
+  // Only change code above this line
+  return resultArray;
+}
+
+whatIsInAName([{ first: "Romeo", last: "Montague" }, { first: "Mercutio", last: null }, { first: "Tybalt", last: "Capulet" }], { last: "Capulet" });
+whatIsInAName([{ "apple": 1 }, { "apple": 1 }, { "apple": 1, "bat": 2 }], { "apple": 1 });
+whatIsInAName([{"a": 1, "b": 2, "c": 3}], {"a": 1, "b": 9999, "c": 3})
+
+Notes
+
+https://forum.freecodecamp.org/t/freecodecamp-challenge-guide-wherefore-art-thou/16092
+
+correct solution
+
+function whatIsInAName(collection, source) {
+  // "What's in a name? that which we call a rose
+  // By any other name would smell as sweet.”
+  // -- by William Shakespeare, Romeo and Juliet
+  var srcKeys = Object.keys(source);
+
+  // filter the collection
+  return collection.filter(function(obj) {
+    for (var i = 0; i < srcKeys.length; i++) {
+      if (
+        !obj.hasOwnProperty(srcKeys[i]) ||
+        obj[srcKeys[i]] !== source[srcKeys[i]]
+      ) {
+        return false;
+      }
+    }
+    return true;
+  });
+}

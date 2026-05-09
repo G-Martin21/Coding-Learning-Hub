@@ -1,0 +1,35 @@
+/*
+A prime number is a whole number greater than 1 with exactly two divisors: 1 and itself. For example, 2 is a prime number because it is only divisible by 1 and 2. In contrast, 4 is not prime since it is divisible by 1, 2 and 4.
+
+Rewrite sumPrimes so it returns the sum of all prime numbers that are less than or equal to num.
+*/
+
+function sumPrimes(num) {
+
+//This solution only works for small numbers; better implement a for loop
+// see https://www.programiz.com/c-programming/examples/prime-number
+
+// https://www.programiz.com/javascript/examples/prime-number
+
+const isPrime = function(num) {
+  let i = 2;
+  while (i < num - 1) {
+     if (num % i !== 0) {i++} 
+     else {return false}
+   }
+  return true
+}
+
+if (num > 1) {
+  let totalSum = 0;
+  for (let i = 2; i <= num; i++) {
+    if (isPrime(i)) {totalSum += i}
+  }
+  return totalSum;
+} else {
+  return "Error";
+}
+
+}
+
+console.log(sumPrimes());

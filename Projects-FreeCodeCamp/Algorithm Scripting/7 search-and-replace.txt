@@ -1,0 +1,13 @@
+function myReplace(str, before, after) {
+
+  let wordCorrectCase = 
+    (before.charAt(0) === before.charAt(0).toUpperCase()) ? 
+    after.replace(after.charAt(0), after.charAt(0).toUpperCase()) :
+    after.replace(after.charAt(0), after.charAt(0).toLowerCase());
+  
+  return str.replace(before, wordCorrectCase);
+}
+
+console.log(myReplace("A quick brown fox jumped over the lazy dog", "jumped", "leaped"));
+console.log(myReplace("He is Sleeping on the couch", "Sleeping", "sitting"));
+console.log(myReplace("I think we should look up there", "up", "Down"))

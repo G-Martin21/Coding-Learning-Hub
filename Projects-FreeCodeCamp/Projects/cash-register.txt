@@ -1,0 +1,105 @@
+function checkCashRegister(price, cash, cid) {
+  let change = {status: "", change: []};
+  
+  if (cash >= price) {
+    // Floating point arithmetic is not always 100% accurate!
+    let totalChange = (cash * 100 - price * 100) / 100;
+    
+    let cashInRegister = cid.reduce( (total, num) => { return total = (total * 100 + num[1]*100) / 100}, 0)
+    
+    // cashInRegister
+    if (cashInRegister < totalChange) {
+        return {status: "INSUFFICIENT_FUNDS", change: []};
+    } else if (cashInRegister == totalChange) { 
+        return {status: "CLOSED", change: [...cid]};
+    } else if (cashInRegister > totalChange) {
+      
+    let dollars = Math.floor(totalChange);
+    let pennies = (totalChange * 100 - dollars * 100);      
+      
+    // Given an amount return its value in coins (or notes)
+    // int amount, obj coins, obj values = obj coins
+    const getChange = (amount, coins, values) => {
+        Object.keys(values).forEach( item => {
+           coins[item] = (Math.floor(amount / values[item]) * values[item]);
+           amount %= values[item]
+         });
+        return coins;
+    };
+      
+    /* Given an amount, return the change it is possible to give with the money in the cash register, highest notes/coins.
+    int @change, int @cash = array @changeCoins */
+    const getCash = (change, cash) => {
+      let carryOver = 0;
+      let changeCoins = [];
+      let cashInRegister = 0;
+      let index = 0;
+      Object.keys(change).forEach( item => {
+        index = cash.findIndex( (value) => value[0] == item);
+        cashInRegister = cash[index][1];
+        if (change[item] != 0) {
+           if (cashInRegister == 0) {
+             //pass left coins to the next value
+             carryOver += change[item];
+           } else if (cashInRegister >= change[item] + carryOver) {
+              changeCoins.push([item, change[item] + carryOver])
+              cash[index][1] = cashInRegister - change[item] - carryOver;
+              carryOver = 0;
+          } else if (cashInRegister < change[item] + carryOver) {
+              changeCoins.push([item, cashInRegister]);
+              //pass left coins to the next value
+              carryOver = change[item] + carryOver- cashInRegister;
+              cash[index][1] = 0;
+          }
+        }
+      })
+      // If carryOver != 0 it is not possible to give change with the cash in the register.
+      return (carryOver == 0) ? changeCoins : -1;
+    };
+    
+    let changeCoins = [];
+    const dollarNotes = { "ONE HUNDRED": 0, TWENTY: 0, TEN:0, FIVE: 0, ONE: 0}
+    const dollarValues = { "ONE HUNDRED": 100, TWENTY: 20, TEN: 10, FIVE: 5, ONE: 1}
+    let changeForDollar= getChange(dollars, dollarNotes, dollarValues);
+    
+    let dollarsInRegister = cid.filter( arr => {
+        if (Object.keys(dollarNotes).includes(arr[0])) {
+          return arr;
+        }
+      })
+      
+    let changeDollars = getCash(changeForDollar, dollarsInRegister);
+      if (changeDollars == -1) {
+        return {status: "INSUFFICIENT_FUNDS", change: []}
+      }
+
+    const pennyCoins = { QUARTER: 0, DIME: 0, NICKEL: 0, PENNY: 0};
+    const pennyValues = { QUARTER: 25, DIME: 10, NICKEL: 5, PENNY: 1};
+    let changeForPenny = getChange(pennies, pennyCoins, pennyValues);
+    
+    let centsInRegister = [];
+    // cid contains cents and its fractions as decimal numbers of dollars; to operate we change them to integers.
+    cid.forEach( arr => {
+        if (Object.keys(pennyCoins).includes(arr[0])) {
+          centsInRegister.push([arr[0], Math.ceil(arr[1]*100)]);
+        }
+      })
+    //console.log(centsInRegister)
+    let changePenny = getCash(changeForPenny, centsInRegister);
+      if (changePenny == -1) {
+        return {status: "INSUFFICIENT_FUNDS", change: []}
+      }
+    
+    // Convert cents (pennies) back to decimal (fractions of dollars)
+    for (let x in changePenny) {
+        changePenny[x][1] = changePenny[x][1] / 100;
+    }
+    change.status = "OPEN";
+    change.change = [...changeDollars, ...changePenny];
+}
+  }  // cash >= price
+  return change;
+};
+
+
+console.log(checkCashRegister(19.5, 20, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]));
